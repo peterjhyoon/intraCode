@@ -1,0 +1,21 @@
+body {
+    background-color: #222222;
+}
+
+.menu-bar {
+    background-color: grey;
+}
+
+.menu-bar button {
+    background-color: inherit;
+    outline: none;
+    border: none;
+}
+
+.code-line {
+    white-space: pre;
+    font-size: 14;
+    margin-left: 1em;
+    outline: none;
+    color: #A6A7A6;
+}
