@@ -12,6 +12,10 @@ body {
     border: none;
 }
 
+.code-space {
+    outline: none;
+}
+
 .code-line {
     white-space: pre;
     font-size: 14;
