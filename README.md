@@ -1,7 +1,8 @@
 # intraCode
 
 ## Completed
-- 
+- Line Count
+- Tab Button
 
 ## Priority
 - Make sure line count cant be deleted
