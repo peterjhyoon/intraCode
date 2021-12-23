@@ -10,6 +10,7 @@
 - Cursor view when no space / content (?)
 
 ## Others
+- Workspace Tabs https://www.youtube.com/watch?v=Ay93z3mZuh8
 - Directories (using tree)
 - Save / Open Files
 - Color Coding
