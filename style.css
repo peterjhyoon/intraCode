@@ -1,16 +1,54 @@
 body {
-    background-color: #222222;
+    background-color: #181818;
 }
 
 .menu-bar {
     background-color: grey;
-    margin-bottom: 10px;
+    padding-bottom: 2px;
+    /*margin-bottom: 10px;*/
 }
 
 .menu-bar button {
     background-color: inherit;
     outline: none;
     border: none;
+}
+
+.dropdown-button {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdown ul {
+    color: black;
+    padding: 5px;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-button:hover .dropdown {
+    display: block;
+}
+
+.workspace {
+    background-color: #282828;
+    margin-bottom: 10px;
+}
+
+.workspace button {
+    background-color: inherit;
+    outline: none;
+    border: none;
+    color: grey;
+    padding: 5px;
 }
 
 .code-space {
@@ -24,7 +62,7 @@ body {
     font-size: 14;
     margin-left: 1em;
     outline: none;
-    color: #A6A7A6;
+    color: #a6a7a6;
     
 }
 
@@ -33,9 +71,3 @@ body {
     counter-increment: line;
     content: counter(line);
 }
-
-
-
-
-
-  
