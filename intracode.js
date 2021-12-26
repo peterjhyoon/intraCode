@@ -29,3 +29,5 @@ document.addEventListener("keydown", function(event) {
 function tabOnCode() {
     document.execCommand('insertHTML', false, '&#009');
 }
+
+// Creating New Files --> use Class (properties i.e. fileName to create a new codespace div)
