@@ -10,7 +10,14 @@ document.addEventListener("keydown", function(event) {
     }
     // Del Key --> if space count = 4, count as indent and delete 4
     if(event.keyCode == 8) {
-        console.log("poss");
+        // Cannot Delete Line Count
+        var lineCount = document.querySelector(".code-space").childElementCount;
+        if (lineCount == 1) {
+            var lineLen = document.querySelector(".code-line").firstChild.textContent.length;
+            if (lineLen == 0) {
+                event.preventDefault();
+            }
+        }
     }
     // Space Bar
     if(event.keyCode == 32) {
