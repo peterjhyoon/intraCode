@@ -5,7 +5,6 @@
 - Tab Button
 
 ## Priority
-- Make sure line count cant be deleted
 - Auto-indent
 - Cursor view when no space / content (?)
 
