@@ -41,9 +41,9 @@
             </button>
         </div>
         <div class="workspace">
-            <button class="workspace-button" data-for-tab="1">Untitled-1</button>
-            <!--<button class="workspace-button">Untitled-2</button>
-            <button class="workspace-button">Untitled-3</button>-->
+            <!-- Consider grouping tab with closing x via div (of two buttons) -->
+            <button id="new-tab" onclick="createNewTab()">+</button>
+            <button class="workspace-button">Untitled</button>
         </div>
         <div class="directory-bar"></div>
         <div class="code-space" contenteditable=true data-tab="1">

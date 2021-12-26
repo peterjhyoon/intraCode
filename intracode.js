@@ -13,8 +13,8 @@ document.addEventListener("keydown", function(event) {
         // Cannot Delete Line Count
         var lineCount = document.querySelector(".code-space").childElementCount;
         if (lineCount == 1) {
-            var lineLen = document.querySelector(".code-line").firstChild.textContent.length;
-            if (lineLen == 0) {
+            var firstLine = document.querySelector(".code-line").firstChild;
+            if (firstLine == null || firstLine.textContent.length <= 0) {
                 event.preventDefault();
             }
         }
@@ -28,6 +28,23 @@ document.addEventListener("keydown", function(event) {
 // For tabbing
 function tabOnCode() {
     document.execCommand('insertHTML', false, '&#009');
-}
+};
 
-// Creating New Files --> use Class (properties i.e. fileName to create a new codespace div)
+/* Creating New Files --> use Class (properties i.e. fileName to create a new codespace div)
+
+class File {
+    constructor(name, type) {
+        this.name = name;
+        this.height = height;
+    }
+}
+*/
+
+// Creating New Tabs
+function createNewTab() {
+    // Loop using Next Element Sibling
+    var newTab = document.createElement("button");
+    newTab.className = "workspace-button";
+    newTab.textContent = "Untitled";
+    document.querySelector(".workspace").appendChild(newTab);
+}

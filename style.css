@@ -40,6 +40,7 @@ body {
 
 .workspace {
     background-color: #282828;
+    height: fixed;
     margin-bottom: 10px;
 }
 
@@ -64,6 +65,10 @@ body {
     outline: none;
     color: #a6a7a6;
     
+}
+
+#new-tab {
+    float: right;
 }
 
 .code-line::before {

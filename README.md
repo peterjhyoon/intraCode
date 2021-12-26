@@ -2,7 +2,8 @@
 
 ## Completed
 - Line Count
-- Tab Button
+- Tab Button and Creating Tabs
+- Can't delete Line Count
 
 ## Priority
 - Auto-indent
