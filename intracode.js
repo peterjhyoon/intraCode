@@ -30,21 +30,36 @@ function tabOnCode() {
     document.execCommand('insertHTML', false, '&#009');
 };
 
-/* Creating New Files --> use Class (properties i.e. fileName to create a new codespace div)
-
-class File {
-    constructor(name, type) {
-        this.name = name;
-        this.height = height;
-    }
-}
-*/
+var tabCount = 0;
 
 // Creating New Tabs
 function createNewTab() {
-    // Loop using Next Element Sibling
-    var newTab = document.createElement("button");
-    newTab.className = "workspace-button";
-    newTab.textContent = "Untitled";
-    document.querySelector(".workspace").appendChild(newTab);
+    tabCount++;
+    // reference to + button
+    var tabBase = document.querySelector(".workspace");
+    console.log(tabBase);
+    var newTab = document.createElement("div");
+    newTab.className = "workspace-tab";
+    newTab.textContent = "Untitled-" + tabCount;
+    newTab.setAttribute("tab-num",tabCount+1);
+    var closeButton = document.createElement("button");
+    closeButton.className = "close-tab";
+    closeButton.textContent = "x";
+    closeButton.setAttribute("button-num",tabCount+1);
+    // deleting tab
+    closeButton.onclick = function() {
+        var tabToDelete;
+        var temp = tabBase.firstElementChild;
+        /*
+        while (temp.nextElementSibling != null) {
+            if (temp.nextElementSibling.getAttribute('tab-num') == closeButton.getAttribute("button-num")) {
+                tabToDelete = temp.nextElementSibling;
+                break;
+            }
+        }
+        tabBase.removeChild(tabToDelete);
+        console.log(closeButton.getAttribute('button-num'));*/
+    }
+    newTab.appendChild(closeButton);
+    tabBase.append(newTab);
 }

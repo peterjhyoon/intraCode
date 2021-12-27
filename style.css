@@ -44,18 +44,36 @@ body {
     margin-bottom: 10px;
 }
 
-.workspace button {
+.workspace-tab {
+    border: solid #111111;
+    border-width: thin;
+    padding: 5px;
+    font-family: Arial;
+    color: grey;
+    font-size: 13;
+    display: inline-block;
+}
+.close-tab {
     background-color: inherit;
     outline: none;
     border: none;
-    color: grey;
-    padding: 5px;
+    color: white;
+}
+
+#new-tab {
+    margin-top: 5px;
+    font-display: italics;
+    background-color: inherit;
+    border: none;
+    font-size: 13;
+    font-style: italic;
 }
 
 .code-space {
     outline: none;
     counter-reset: line;
     display: block;
+    min-height: 88%;
 }
 
 .code-line {
@@ -75,4 +93,19 @@ body {
     margin-right: 3em;
     counter-increment: line;
     content: counter(line);
+}
+
+.supplement-bar {
+    margin-top: 2em;
+    background-color: #00b4d8;
+    overflow: hidden;
+    padding: 2px;
+}
+
+#docType {
+    float: right;
+    background-color: inherit;
+    border: none;
+    color: white;
+    margin-right: 30px;
 }
