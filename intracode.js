@@ -40,6 +40,7 @@ function createNewTab() {
     console.log(tabBase);
     var newTab = document.createElement("div");
     newTab.className = "workspace-tab";
+    // change name context (start with no num, then with num)
     newTab.textContent = "Untitled-" + tabCount;
     newTab.setAttribute("tab-num",tabCount+1);
     var closeButton = document.createElement("button");
@@ -48,17 +49,18 @@ function createNewTab() {
     closeButton.setAttribute("button-num",tabCount+1);
     // deleting tab
     closeButton.onclick = function() {
-        var tabToDelete;
+        // make sure to remove corresponding codespace
         var temp = tabBase.firstElementChild;
-        /*
-        while (temp.nextElementSibling != null) {
-            if (temp.nextElementSibling.getAttribute('tab-num') == closeButton.getAttribute("button-num")) {
-                tabToDelete = temp.nextElementSibling;
+        let i = 0
+        while (i < closeButton.getAttribute('button-num')) {
+            temp = temp.nextElementSibling;
+            if (temp.getAttribute('tab-num') == closeButton.getAttribute('button-num')) {
+                tabBase.removeChild(temp);
                 break;
             }
+            console.log(temp);
+            i++;
         }
-        tabBase.removeChild(tabToDelete);
-        console.log(closeButton.getAttribute('button-num'));*/
     }
     newTab.appendChild(closeButton);
     tabBase.append(newTab);
