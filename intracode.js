@@ -33,13 +33,21 @@ function tabOnCode() {
 var tabCount = 0;
 
 // Creating New Tabs
-function createNewTab() {
+function updateTabs() {
     tabCount++;
     // reference to + button
     var tabBase = document.querySelector(".workspace");
-    console.log(tabBase);
+    var spaceBase = document.querySelector(".code-space");
+    console.log(spaceBase);
+
+    // Creating new tab and space
+    var newSpace = document.createElement("div");
     var newTab = document.createElement("div");
+    newSpace.className = "code-space";
     newTab.className = "workspace-tab";
+    newSpace.setAttribute('contenteditable',true);
+    newSpace.setAttribute('tab', tabCount);
+
     // change name context (start with no num, then with num)
     newTab.textContent = "Untitled-" + tabCount;
     newTab.setAttribute("tab-num",tabCount+1);
@@ -47,15 +55,17 @@ function createNewTab() {
     closeButton.className = "close-tab";
     closeButton.textContent = "x";
     closeButton.setAttribute("button-num",tabCount+1);
-    // deleting tab
+    // Deleting Tab
     closeButton.onclick = function() {
         // make sure to remove corresponding codespace
         var temp = tabBase.firstElementChild;
+        var temp = document.querySelector(".code-space");
         let i = 0
         while (i < closeButton.getAttribute('button-num')) {
             temp = temp.nextElementSibling;
             if (temp.getAttribute('tab-num') == closeButton.getAttribute('button-num')) {
                 tabBase.removeChild(temp);
+                // codespace object.style.display = "none"
                 break;
             }
             console.log(temp);
@@ -64,4 +74,8 @@ function createNewTab() {
     }
     newTab.appendChild(closeButton);
     tabBase.append(newTab);
+
+    /*
+        Make sure that Code Space appends appropriately!!!
+    */
 }

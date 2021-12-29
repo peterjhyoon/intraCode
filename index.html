@@ -42,13 +42,13 @@
         </div>
         <div class="workspace">
             <!-- Consider grouping tab with closing x via div (of two buttons) -->
-            <button id="new-tab" onclick="createNewTab()">+</button>
+            <button id="new-tab" onclick="updateTabs()">+</button>
             <div class="workspace-tab">Untitled
                 <button class="close-tab">x</button>
             </div>
         </div>
         <div class="directory-bar"></div>
-        <div class="code-space" contenteditable=true data-tab="1">
+        <div class="code-space" contenteditable=true tab="1">
             <div class="code-line"></div>
         </div>
         <div class="supplement-bar">
