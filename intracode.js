@@ -38,15 +38,15 @@ function updateTabs() {
     // reference to + button
     var tabBase = document.querySelector(".workspace");
     var spaceBase = document.querySelector(".code-space");
-    console.log(spaceBase);
+    console.log(tabBase);
 
     // Creating new tab and space
-    var newSpace = document.createElement("div");
+    //var newSpace = document.createElement("div");
     var newTab = document.createElement("div");
-    newSpace.className = "code-space";
+    //newSpace.className = "code-space";
     newTab.className = "workspace-tab";
-    newSpace.setAttribute('contenteditable',true);
-    newSpace.setAttribute('tab', tabCount);
+    //newSpace.setAttribute('contenteditable',true);
+    //newSpace.setAttribute('tab', tabCount);
 
     // change name context (start with no num, then with num)
     newTab.textContent = "Untitled-" + tabCount;
@@ -59,16 +59,15 @@ function updateTabs() {
     closeButton.onclick = function() {
         // make sure to remove corresponding codespace
         var temp = tabBase.firstElementChild;
-        var temp = document.querySelector(".code-space");
         let i = 0
         while (i < closeButton.getAttribute('button-num')) {
             temp = temp.nextElementSibling;
+            console.log(temp);
             if (temp.getAttribute('tab-num') == closeButton.getAttribute('button-num')) {
                 tabBase.removeChild(temp);
                 // codespace object.style.display = "none"
                 break;
             }
-            console.log(temp);
             i++;
         }
     }
