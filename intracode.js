@@ -11,10 +11,13 @@ document.addEventListener("keydown", function(event) {
     // Del Key --> if space count = 4, count as indent and delete 4
     if(event.keyCode == 8) {
         // Cannot Delete Line Count
+        console.log('delete button');
+        //let parseSpaces = document.body.querySelector('.code-space');
         var lineCount = document.querySelector(".code-space").childElementCount;
+        
         if (lineCount == 1) {
             var firstLine = document.querySelector(".code-line").firstChild;
-            if (firstLine == null || firstLine.textContent.length <= 0) {
+            if (firstLine.textContent.length <= 0) {
                 event.preventDefault();
             }
         }
@@ -32,9 +35,13 @@ function tabOnCode() {
 
 var tabCount = 0;
 
+var currTabNum = 0;
+
+
 // Creating New Tabs
 function updateTabs() {
     tabCount++;
+    currTabNum++;
     // reference to + button
     var tabBase = document.querySelector(".workspace");
     var spaceBase = document.querySelector(".supplement-bar");
@@ -51,7 +58,7 @@ function updateTabs() {
         newTab.textContent = "Untitled";
     }
     else {
-        newTab.textContent = "Untitled-" + tabCount;
+        newTab.textContent = "Untitled-" + (currTabNum-1);
     }
     //newTab.textContent = "Untitled-" + tabCount;
     newTab.setAttribute("tab-num",tabCount);
@@ -71,15 +78,21 @@ function updateTabs() {
                 tabBase.removeChild(temp);
                 document.body.removeChild(newSpace);
                 tabCount--;
+
                 // codespace object.style.display = "none"
                 break;
             }
             i++;
         }
+        displayCodeSpace(closeButton.getAttribute('button-num')-1);
     }
     newTab.appendChild(closeButton);
     if (tabCount >= 2) {
         newTab.onclick = displayCodeSpace(newTab.getAttribute('tab-num'));
+    }
+
+    newTab.onclick = function() {
+        displayCodeSpace(newTab.getAttribute('tab-num'));
     }
     
     //displayCodeSpace(newTab.getAttribute('tab-num'));
