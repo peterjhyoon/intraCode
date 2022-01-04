@@ -73,6 +73,7 @@ function updateTabs() {
         var spaceLst = document.querySelectorAll('.code-space');
         tabLst.splice(closeButton.getAttribute('button-num')-1,1);
         spaceLst.splice(closeButton.getAttribute('button-num')-1,1);
+        updateIDNums(closeButton.getAttribute('close-tab'));
     }
 
     newTab.onclick = function() {
