@@ -33,9 +33,11 @@ function tabOnCode() {
     document.execCommand('insertHTML', false, '&#009');
 };
 
-idNum = 0;
+var idNum = 0;
+var tabCount = 0;
 
 function updateTabs() {
+    tabCount++
     idNum++;
     var tabBase = document.querySelector('.workspace');
     var spaceBase = document.querySelector('.supplement-bar');
@@ -69,12 +71,28 @@ function updateTabs() {
     closeButton.setAttribute('button-num',newTab.id);
     
     closeButton.onclick = function() {
+        var parseTab = tabBase.firstElementChild;
+        let counter = 0;
+        while (counter < document.querySelector('.workspace-tabs').length) {
+            parseTab = parseTab.nextElementSibling;
+            if (counter == (closeButton.getAttribute('button-num') - 1)) {
+                tabBase.removeChild(parseTab);
+                document.body.removeChild(document.querySelectorAll('.code-space')[closeButton.getAttribute('button-num')]);
+                break;
+            }
+        }
+
+        /*
         var tabLst = document.querySelectorAll('.workspace-tab');
         var spaceLst = document.querySelectorAll('.code-space');
         tabLst.splice(closeButton.getAttribute('button-num')-1,1);
         spaceLst.splice(closeButton.getAttribute('button-num')-1,1);
         updateIDNums(closeButton.getAttribute('close-tab'));
+        */
+        
     }
+
+    newTab.appendChild(closeButton);
 
     newTab.onclick = function() {
         return null;
@@ -174,6 +192,7 @@ function updateTabs() {
 }
 */
 // For First Tab (Edge Case)
+
 if (tabCount > 1) {
     var firstTab = document.querySelector(".code-space");
     firstTab.onclick = displayCodeSpace(firstTab.getAttribute('tab-num'));
