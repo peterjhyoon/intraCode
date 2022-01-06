@@ -28,14 +28,17 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
+// For tabbing
 function tabOnCode() {
     document.execCommand('insertHTML', false, '&#009');
 };
 
 var idNum = 0;
+var tabNaming = 0;
 
 function updateTabs() {
     idNum++;
+    tabNaming++;
 
     var tabBase = document.querySelector('.workspace');
     var spaceBase = document.querySelector('.supplement-bar');
@@ -60,13 +63,68 @@ function updateTabs() {
         newTab.textContent = "Untitled";
     }
     else {
-        newTab.textContent = "Untitled-" + (newTab.id - 1);
+        newTab.textContent = "Untitled-" + (tabNaming - 1);
     }
 
     var closeButton = document.createElement('button');
     closeButton.className = "close-tab";
     closeButton.textContent = "x";
     closeButton.id = idNum;
+    closeButton.addEventListener('click', deleteTab, false);
 
+    newTab.appendChild(closeButton);
 
+    tabBase.append(newTab);
+
+    spaceBase.insertAdjacentElement('beforebegin', newSpace);
+
+}
+
+// Delete Corresponding Tab + Space, and update the IDs
+function deleteTab(evt) {
+    indexToDelete = evt.target.id - 1;
+    console.log(indexToDelete);
+
+    var tabBase = document.querySelector('.workspace');
+
+    // Deleting Tab
+    var parseTab = tabBase.firstElementChild;
+    let counter = 0;
+    while (counter < document.querySelectorAll('.workspace-tab').length) {
+        parseTab = parseTab.nextElementSibling;
+        if (counter == indexToDelete) {
+            tabBase.removeChild(parseTab);
+            break;
+        }
+        /*
+        if (parseTab.className != "workspace-tab") {
+            break;
+        }
+        else {
+            if (counter == indexToDelete) {
+                tabBase.removeChild(parseTab);
+            }
+        }
+        */
+        counter++;
+    }
+
+    // Deleting Space
+    var deleteSpace = document.querySelectorAll('.code-space')[indexToDelete];
+    document.body.removeChild(deleteSpace);
+
+    //Update the ID
+    let refresh = indexToDelete;
+    let updatedTabArr = document.querySelectorAll('.workspace-tab');
+    let updatedSpaceArr = document.querySelectorAll('.code-space');
+
+    while (refresh < document.querySelectorAll('.workspace-tab').length) {
+        let newID = Number(updatedTabArr[refresh].id) - 1;
+        updatedTabArr[refresh].id = newID;
+        updatedTabArr[refresh].firstElementChild.id = newID;
+        updatedSpaceArr[refresh].id = newID;
+        refresh++;
+    }
+
+    idNum--;
 }
