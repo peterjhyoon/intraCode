@@ -10,13 +10,11 @@ document.addEventListener("keydown", function(event) {
     }
     // Del Key --> if space count = 4, count as indent and delete 4
     if(event.keyCode == 8) {
-        // Cannot Delete Line Count
-        console.log('delete button');
-        //let parseSpaces = document.body.querySelector('.code-space');
-        var lineCount = document.querySelector(".code-space").childElementCount;
-        
+        // Cannot Delete Line Count (FOR ALL SPACES)
+        let currSpace = document.querySelectorAll('.code-space')[Number(event.target.id) - 1];
+        let lineCount = currSpace.childElementCount;
         if (lineCount == 1) {
-            var firstLine = document.querySelector(".code-line").firstChild;
+            let firstLine = currSpace.firstChild;
             if (firstLine.textContent.length <= 0) {
                 event.preventDefault();
             }
@@ -79,12 +77,10 @@ function updateTabs() {
 
     newTab.appendChild(closeButton);
 
-    newTab.addEventListener('click', updateDisplay(Number(newTab.id) - 1), false);
-
-    //newTab.onclick = updateDisplay((Number(newTab.id) - 1));
-
-    //newTab.onclick = updateDisplay(Number(newTab.id) - 1);
-    console.log(Number(newTab.id) - 1);
+    newTab.onclick = function(evt) {
+        let indexToShow = Number(evt.target.id) - 1;
+        updateDisplay(indexToShow);
+    }
 
     tabBase.append(newTab);
 
@@ -95,8 +91,7 @@ function updateTabs() {
 
 // Delete Corresponding Tab + Space, and update the IDs
 function deleteTab(evt) {
-    indexToDelete = evt.target.id - 1;
-    console.log(indexToDelete);
+    indexToDelete = Number(evt.target.id) - 1;
 
     var tabBase = document.querySelector('.workspace');
 
@@ -131,16 +126,18 @@ function deleteTab(evt) {
 
     idNum--;
 
+    // If Tab Deleted is Last Tab, then display closest tab (Edge case)
 }
 
 function updateDisplay(tabIndex) {
     var spaceLst = document.querySelectorAll('.code-space');
-    for (var i = 0; i < spaceLst.length; i++) {
+    //console.log(spaceLst);
+    for (let i = 0; i < spaceLst.length; i++) {
         if (i == tabIndex) {
-            console.log('found');
+            spaceLst[i].style.display = 'block';
         }
         else {
-            console.log('not found');
+            spaceLst[i].style.display = 'none';
         }
     }
-}
+};
