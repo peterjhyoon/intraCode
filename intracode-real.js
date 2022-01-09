@@ -26,6 +26,11 @@ document.addEventListener("keydown", function(event) {
     if(event.keyCode == 32) {
         console.log("poss");
     }
+
+    // Insert Key (not used)
+    if(event.keyCode == 45) {
+        event.preventDefault();
+    }
 });
 
 // For tabbing
@@ -74,10 +79,18 @@ function updateTabs() {
 
     newTab.appendChild(closeButton);
 
+    newTab.addEventListener('click', updateDisplay(Number(newTab.id) - 1), false);
+
+    //newTab.onclick = updateDisplay((Number(newTab.id) - 1));
+
+    //newTab.onclick = updateDisplay(Number(newTab.id) - 1);
+    console.log(Number(newTab.id) - 1);
+
     tabBase.append(newTab);
 
     spaceBase.insertAdjacentElement('beforebegin', newSpace);
-
+    
+    updateDisplay((Number(newTab.id) - 1));
 }
 
 // Delete Corresponding Tab + Space, and update the IDs
@@ -96,16 +109,6 @@ function deleteTab(evt) {
             tabBase.removeChild(parseTab);
             break;
         }
-        /*
-        if (parseTab.className != "workspace-tab") {
-            break;
-        }
-        else {
-            if (counter == indexToDelete) {
-                tabBase.removeChild(parseTab);
-            }
-        }
-        */
         counter++;
     }
 
@@ -127,4 +130,17 @@ function deleteTab(evt) {
     }
 
     idNum--;
+
+}
+
+function updateDisplay(tabIndex) {
+    var spaceLst = document.querySelectorAll('.code-space');
+    for (var i = 0; i < spaceLst.length; i++) {
+        if (i == tabIndex) {
+            console.log('found');
+        }
+        else {
+            console.log('not found');
+        }
+    }
 }
