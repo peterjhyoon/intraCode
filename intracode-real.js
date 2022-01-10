@@ -140,4 +140,15 @@ function updateDisplay(tabIndex) {
             spaceLst[i].style.display = 'none';
         }
     }
-};
+}
+
+function getExtensionType(fileName) {
+    let searchIndex = fileName.indexOf('.');
+    if (serachIndex != -1) {
+        return fileName.substring(searchIndex + 1);
+    }
+    else {
+        // No specified extension typr
+        return false;
+    }
+}
