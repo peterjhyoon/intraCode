@@ -61,7 +61,6 @@ function updateTabs() {
     line.className = 'code-line';
     newSpace.appendChild(line);
 
-
     if (newTab.id == 1) {
         newTab.textContent = "Untitled";
     }
@@ -148,7 +147,24 @@ function getExtensionType(fileName) {
         return fileName.substring(searchIndex + 1);
     }
     else {
-        // No specified extension typr
+        // No specified extension type
         return false;
     }
+}
+
+function renameFile(tabToRemove, newName) {
+    tabToRemove.textContent = newName;
+}
+
+// Open File
+function openFile() {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.addEventListener('change', accessFiles, false);
+    input.click();
+}
+
+function accessFiles() {
+    const selectedFiles = this.files;
+    console.log(selectedFiles[0]);
 }
