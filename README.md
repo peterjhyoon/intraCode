@@ -8,6 +8,7 @@
 ## Priority
 - Auto-indent
 - Save / Open Files
+- https://web.dev/read-files/
 
 ## Others
 - Directories (using tree)
