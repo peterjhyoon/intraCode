@@ -167,4 +167,6 @@ function openFile() {
 function accessFiles() {
     const selectedFiles = this.files;
     console.log(selectedFiles[0]);
+    var fr = new FileReader();
+    // do everything here (i.e. add new tab, paste content into space)
 }
