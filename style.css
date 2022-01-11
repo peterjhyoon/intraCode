@@ -73,7 +73,6 @@ body {
     outline: none;
     counter-reset: line;
     display: block;
-    min-height: 88%;
     margin-bottom: 3em;
 }
 
@@ -97,10 +96,13 @@ body {
 }
 
 .supplement-bar {
-    margin-top: 2em;
+    margin-top: 3em;
     background-color: #00b4d8;
     overflow: hidden;
     padding: 2px;
+    bottom: 0%;
+    width: 100%;
+    position: fixed;
 }
 
 #docType {
