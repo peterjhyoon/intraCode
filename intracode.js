@@ -142,9 +142,9 @@ function updateDisplay(tabIndex) {
 }
 
 function getExtensionType(fileName) {
-    let searchIndex = fileName.indexOf('.');
-    if (serachIndex != -1) {
-        return fileName.substring(searchIndex + 1);
+    var searchIndex = fileName.indexOf('.');
+    if (searchIndex != -1) {
+        return (fileName.substring(searchIndex + 1));
     }
     else {
         // No specified extension type
@@ -160,13 +160,60 @@ function renameFile(tabToRemove, newName) {
 function openFile() {
     let input = document.createElement('input');
     input.type = 'file';
-    input.addEventListener('change', accessFiles, false);
     input.click();
+    input.addEventListener('change', accessFile, false);
+    //input.click();
 }
 
-function accessFiles() {
-    const selectedFiles = this.files;
-    console.log(selectedFiles[0]);
-    var fr = new FileReader();
-    // do everything here (i.e. add new tab, paste content into space)
+function accessFile() {
+    // Intake File
+    var fileToRead = this.files;
+
+    // Create New Tab
+    updateTabs();
+
+    // Adjust tab attributes to file
+    var currTabs = document.querySelectorAll('.workspace-tab')
+    var currSpaces = document.querySelectorAll('.code-space')
+    var openFileTab = currTabs[currTabs.length - 1];
+    var openFileSpace = currSpaces[currSpaces.length - 1];
+    var lineBase = openFileSpace.firstElementChild
+
+    // Set Tab Name to File Name
+    openFileTab.firstChild.textContent = fileToRead[0].name;
+
+    // Reader
+    const reader = new FileReader();
+    reader.onload = function() {
+        // Each Line
+        const lines = reader.result.split('\n');
+        //console.log(lines);
+        let lineCount = 0;
+        while (lineCount < lines.length) {
+            // Set Text Content
+            lineBase.textContent = lines[lineCount];
+            // Create New Line
+            var newLine = document.createElement('div');
+            newLine.className = 'code-line';
+            openFileSpace.appendChild(newLine);
+            // Increment
+            lineCount++;
+            lineBase = lineBase.nextElementSibling;
+        }
+    }
+    reader.readAsText(fileToRead[0]);
+
+    var openFileName = String(fileToRead[0].name)
+
+    if (getExtensionType(openFileName) == 'js') {
+        console.log("This is a JS File, do highlighting");
+    }
+    else if (getExtensionType(openFileName) == 'css') {
+        console.log('This is a CSS File, do highlighting');
+    }
+    else if (getExtensionType(openFileName) == 'html') {
+        console.log('Tis html, do highlighting');
+    }
+
+    // Make Sure highlighting goes here
 }
