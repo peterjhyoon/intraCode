@@ -10,13 +10,11 @@ document.addEventListener("keydown", function(event) {
     }
     // Del Key --> if space count = 4, count as indent and delete 4
     if(event.keyCode == 8) {
-        // Cannot Delete Line Count
-        console.log('delete button');
-        //let parseSpaces = document.body.querySelector('.code-space');
-        var lineCount = document.querySelector(".code-space").childElementCount;
-        
+        // Cannot Delete Line Count (FOR ALL SPACES)
+        let currSpace = document.querySelectorAll('.code-space')[Number(event.target.id) - 1];
+        let lineCount = currSpace.childElementCount;
         if (lineCount == 1) {
-            var firstLine = document.querySelector(".code-line").firstChild;
+            let firstLine = currSpace.firstChild;
             if (firstLine.textContent.length <= 0) {
                 event.preventDefault();
             }
@@ -26,6 +24,11 @@ document.addEventListener("keydown", function(event) {
     if(event.keyCode == 32) {
         console.log("poss");
     }
+
+    // Insert Key (not used)
+    if(event.keyCode == 45) {
+        event.preventDefault();
+    }
 });
 
 // For tabbing
@@ -33,103 +36,135 @@ function tabOnCode() {
     document.execCommand('insertHTML', false, '&#009');
 };
 
-var tabCount = 0;
+var idNum = 0;
+var tabNaming = 0;
 
-var currTabNum = 0;
-
-
-// Creating New Tabs
 function updateTabs() {
-    tabCount++;
-    currTabNum++;
-    // reference to + button
-    var tabBase = document.querySelector(".workspace");
-    var spaceBase = document.querySelector(".supplement-bar");
-    // Creating new tab and space
-    var newSpace = document.createElement("div");
-    var newTab = document.createElement("div");
-    newSpace.className = "code-space";
-    newTab.className = "workspace-tab";
-    newSpace.setAttribute('contenteditable',true);
-    newSpace.setAttribute('tab', tabCount);
+    idNum++;
+    tabNaming++;
 
-    // change name context (start with no num, then with num)
-    if (tabCount == 1) {
+    var tabBase = document.querySelector('.workspace');
+    var spaceBase = document.querySelector('.supplement-bar');
+
+    var newTab = document.createElement('div');
+    newTab.className = "workspace-tab";
+    var newSpace = document.createElement('div');
+    newSpace.className = "code-space";
+    newSpace.setAttribute('contenteditable',true);
+
+    // Set ID Nums
+    newTab.id = idNum;
+    newSpace.id = idNum;
+
+    // Adding Lines for Corresponding Code Space
+    var line = document.createElement('div');
+    line.className = 'code-line';
+    newSpace.appendChild(line);
+
+    if (newTab.id == 1) {
         newTab.textContent = "Untitled";
     }
     else {
-        newTab.textContent = "Untitled-" + (currTabNum-1);
+        newTab.textContent = "Untitled-" + (tabNaming - 1);
     }
-    //newTab.textContent = "Untitled-" + tabCount;
-    newTab.setAttribute("tab-num",tabCount);
-    var closeButton = document.createElement("button");
+
+    var closeButton = document.createElement('button');
     closeButton.className = "close-tab";
     closeButton.textContent = "x";
-    closeButton.setAttribute("button-num",tabCount);
-    // Deleting Tab and Space
-    closeButton.onclick = function() {
-        // make sure to remove corresponding codespace
-        var temp = tabBase.firstElementChild;
-        let i = 0
-        while (i < closeButton.getAttribute('button-num')) {
-            temp = temp.nextElementSibling;
-            //console.log(temp);
-            if (temp.getAttribute('tab-num') == closeButton.getAttribute('button-num')) {
-                tabBase.removeChild(temp);
-                document.body.removeChild(newSpace);
-                tabCount--;
+    closeButton.id = idNum;
+    closeButton.addEventListener('click', deleteTab, false);
 
-                // codespace object.style.display = "none"
-                break;
-            }
-            i++;
-        }
-        displayCodeSpace(closeButton.getAttribute('button-num')-1);
-    }
     newTab.appendChild(closeButton);
-    if (tabCount >= 2) {
-        newTab.onclick = displayCodeSpace(newTab.getAttribute('tab-num'));
+
+    newTab.onclick = function(evt) {
+        let indexToShow = Number(evt.target.id) - 1;
+        updateDisplay(indexToShow);
     }
 
-    newTab.onclick = function() {
-        displayCodeSpace(newTab.getAttribute('tab-num'));
-    }
-    
-    //displayCodeSpace(newTab.getAttribute('tab-num'));
     tabBase.append(newTab);
-    // Adding code lines to new space
-    line = document.createElement("div");
-    line.className = "code-line";
-    newSpace.append(line);
 
     spaceBase.insertAdjacentElement('beforebegin', newSpace);
-    /*
-        Make sure that Code Space appends appropriately!!!
-    */
+    
+    updateDisplay((Number(newTab.id) - 1));
 }
 
-// For First Tab (Edge Case)
-if (tabCount > 1) {
-    var firstTab = document.querySelector(".code-space");
-    firstTab.onclick = displayCodeSpace(firstTab.getAttribute('tab-num'));
+// Delete Corresponding Tab + Space, and update the IDs
+function deleteTab(evt) {
+    indexToDelete = Number(evt.target.id) - 1;
+
+    var tabBase = document.querySelector('.workspace');
+
+    // Deleting Tab
+    var parseTab = tabBase.firstElementChild;
+    let counter = 0;
+    while (counter < document.querySelectorAll('.workspace-tab').length) {
+        parseTab = parseTab.nextElementSibling;
+        if (counter == indexToDelete) {
+            tabBase.removeChild(parseTab);
+            break;
+        }
+        counter++;
+    }
+
+    // Deleting Space
+    var deleteSpace = document.querySelectorAll('.code-space')[indexToDelete];
+    document.body.removeChild(deleteSpace);
+
+    //Update the ID
+    let refresh = indexToDelete;
+    let updatedTabArr = document.querySelectorAll('.workspace-tab');
+    let updatedSpaceArr = document.querySelectorAll('.code-space');
+
+    while (refresh < document.querySelectorAll('.workspace-tab').length) {
+        let newID = Number(updatedTabArr[refresh].id) - 1;
+        updatedTabArr[refresh].id = newID;
+        updatedTabArr[refresh].firstElementChild.id = newID;
+        updatedSpaceArr[refresh].id = newID;
+        refresh++;
+    }
+
+    idNum--;
+
+    // If Tab Deleted is Last Tab, then display closest tab (Edge case)
 }
 
-function displayCodeSpace(tabNum) {
-    var spaces = document.querySelector(".code-space");
-    let counter = 1;
-    while (counter <= tabCount) {
-        if (counter == tabNum) {
-            spaces.style.display = 'block';
-            //console.log("this is the tab to show");
+function updateDisplay(tabIndex) {
+    var spaceLst = document.querySelectorAll('.code-space');
+    //console.log(spaceLst);
+    for (let i = 0; i < spaceLst.length; i++) {
+        if (i == tabIndex) {
+            spaceLst[i].style.display = 'block';
         }
         else {
-            spaces.style.display = 'none';
-            //console.log("this is the tab to hide");
+            spaceLst[i].style.display = 'none';
         }
-        spaces = spaces.nextElementSibling;
-        counter++;
     }
 }
 
-// make sure that the style thing applies *even after last tab closes
-// ie) switch to next open tab (edge case)
+function getExtensionType(fileName) {
+    let searchIndex = fileName.indexOf('.');
+    if (serachIndex != -1) {
+        return fileName.substring(searchIndex + 1);
+    }
+    else {
+        // No specified extension type
+        return false;
+    }
+}
+
+function renameFile(tabToRemove, newName) {
+    tabToRemove.textContent = newName;
+}
+
+// Open File
+function openFile() {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.addEventListener('change', accessFiles, false);
+    input.click();
+}
+
+function accessFiles() {
+    const selectedFiles = this.files;
+    console.log(selectedFiles[0]);
+}
