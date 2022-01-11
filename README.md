@@ -9,6 +9,7 @@
 - Auto-indent
 - Save / Open Files
 - https://web.dev/read-files/
+- https://www.geeksforgeeks.org/how-to-read-a-local-text-file-using-javascript/
 
 ## Others
 - Directories (using tree)
