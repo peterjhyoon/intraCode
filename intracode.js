@@ -215,5 +215,7 @@ function accessFile() {
         console.log('Tis html, do highlighting');
     }
 
+    document.getElementById('docType').textContent = getExtensionType(openFileName);
+
     // Make Sure highlighting goes here
 }
