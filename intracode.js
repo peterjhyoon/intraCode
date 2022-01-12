@@ -219,3 +219,13 @@ function accessFile() {
 
     // Make Sure highlighting goes here
 }
+
+function newWindow() {
+    updateTabs();
+    // make sure to add click stuff here
+}
+
+function saveFile() {
+    // Use Blob??
+    return null;
+}
