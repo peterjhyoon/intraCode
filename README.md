@@ -7,9 +7,8 @@
 
 ## Priority
 - Auto-indent
-- Save / Open Files
-- https://web.dev/read-files/
-- https://www.geeksforgeeks.org/how-to-read-a-local-text-file-using-javascript/
+- Save Files
+- https://javascript.info/blob
 
 ## Others
 - Directories (using tree)
