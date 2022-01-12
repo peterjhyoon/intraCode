@@ -225,7 +225,9 @@ function newWindow() {
     // make sure to add click stuff here
 }
 
-function saveFile() {
-    // Use Blob??
-    return null;
-}
+document.addEventListener('click', function(event) {
+    if (event.target.id == 'file-save') {
+        var saveFile = new Blob();
+        console.log('add function to save file here');
+    }
+})
