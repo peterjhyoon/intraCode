@@ -82,6 +82,7 @@ function updateTabs() {
     newTab.onclick = function(evt) {
         let indexToShow = Number(evt.target.id) - 1;
         updateDisplay(indexToShow);
+        currSpaceIndex = indexToShow;
     }
 
     tabBase.append(newTab);
