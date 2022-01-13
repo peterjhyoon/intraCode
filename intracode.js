@@ -1,4 +1,7 @@
+var currSpaceIndex = -1;
+
 document.addEventListener("keydown", function(event) {
+    currSpaceIndex = Number(event.target.id) - 1;
     // Tab for Indent
     if (event.keyCode == 9) {
         tabOnCode();
@@ -225,9 +228,20 @@ function newWindow() {
     // make sure to add click stuff here
 }
 
-document.addEventListener('click', function(event) {
-    if (event.target.id == 'file-save') {
-        var saveFile = new Blob();
-        console.log('add function to save file here');
-    }
-})
+function fileSave() {
+    // Lines as Array
+    console.log(currSpaceIndex);
+    let currSpace = document.querySelectorAll('.code-space')[currSpaceIndex];
+    var linesArr = currSpace.querySelectorAll('.code-line');
+    console.log(linesArr);
+    
+    // Create New Blob
+    var saveFile = new Blob(linesArr, { type: "text/plain" });
+    var saveURL = window.URL.createObjectURL(saveFile);
+
+    var link = document.createElement('a');
+    link.href = saveURL;
+    link.download = 'whats.txt';
+
+    link.click();
+}
