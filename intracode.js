@@ -45,6 +45,7 @@ var tabNaming = 0;
 function updateTabs() {
     idNum++;
     tabNaming++;
+    currSpaceIndex = idNum - 1;
 
     var tabBase = document.querySelector('.workspace');
     var spaceBase = document.querySelector('.supplement-bar');
@@ -83,6 +84,7 @@ function updateTabs() {
         let indexToShow = Number(evt.target.id) - 1;
         updateDisplay(indexToShow);
         currSpaceIndex = indexToShow;
+        document.getElementById('docType').textContent = getExtensionType(newTab.firstChild.textContent);
     }
 
     tabBase.append(newTab);
@@ -234,15 +236,27 @@ function fileSave() {
     console.log(currSpaceIndex);
     let currSpace = document.querySelectorAll('.code-space')[currSpaceIndex];
     var linesArr = currSpace.querySelectorAll('.code-line');
-    console.log(linesArr);
+    console.log(linesArr.textContent);
+
+    var textArr = [];
+
+    for(let lineNum = 0; lineNum < linesArr.length; lineNum++) {
+        console.log(linesArr[lineNum].textContent);
+        textArr.push(linesArr[lineNum].textContent);
+    }
+
+    // Format Text Data by New Lines
+    const fileData = textArr.map(el => el + '\n');
     
     // Create New Blob
-    var saveFile = new Blob(linesArr, { type: "text/plain" });
+    var saveFile = new Blob(fileData, { type: "text/plain" });
     var saveURL = window.URL.createObjectURL(saveFile);
 
     var link = document.createElement('a');
     link.href = saveURL;
-    link.download = 'whats.txt';
-
+    let fileName = document.querySelectorAll('.workspace-tab')[currSpaceIndex].firstChild;
+    link.download = fileName.textContent;
+    
     link.click();
 }
+
