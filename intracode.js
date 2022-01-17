@@ -286,8 +286,3 @@ function saveAs() {
         console.log('Nah not downloading');
     }
 }
-
-function colorJS() {
-    const signs = {'+', '-', '*', '/', '=', '%', '.'};
-    const definers = {'var', 'let', 'const', 'function', 'class'};
-}
