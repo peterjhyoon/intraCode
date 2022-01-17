@@ -154,7 +154,7 @@ function getExtensionType(fileName) {
     }
     else {
         // No specified extension type
-        return false;
+        return 'docType';
     }
 }
 
@@ -260,3 +260,34 @@ function fileSave() {
     link.click();
 }
 
+function saveAs() {
+    let currSpace = document.querySelectorAll('.code-space')[currSpaceIndex];
+    var linesArr = currSpace.querySelectorAll('.code-line');
+
+    var textArr = [];
+
+    for(let lineNum = 0; lineNum < linesArr.length; lineNum++) {
+        textArr.push(linesArr[lineNum].textContent);
+    }
+
+    const fileData = textArr.map(el => el + '\n');
+    var inputFileName = prompt('Enter File Name', 'defaultName');
+
+    var saveFile = new Blob(fileData, { type: "text/plain" });
+    var saveURL = window.URL.createObjectURL(saveFile);
+    var link = document.createElement('a');
+    link.href = saveURL;
+    link.download = inputFileName;
+
+    if (inputFileName != null) {
+        link.click();
+    }
+    else {
+        console.log('Nah not downloading');
+    }
+}
+
+function colorJS() {
+    const signs = {'+', '-', '*', '/', '=', '%', '.'};
+    const definers = {'var', 'let', 'const', 'function', 'class'};
+}
