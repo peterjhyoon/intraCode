@@ -63,6 +63,7 @@ function updateTabs() {
     // Adding Lines for Corresponding Code Space
     var line = document.createElement('div');
     line.className = 'code-line';
+    line.spellcheck = false;
     newSpace.appendChild(line);
 
     if (newTab.id == 1) {
@@ -201,6 +202,7 @@ function accessFile() {
             // Create New Line
             var newLine = document.createElement('div');
             newLine.className = 'code-line';
+            newLine.spellcheck = false;
             openFileSpace.appendChild(newLine);
             // Increment
             lineCount++;
