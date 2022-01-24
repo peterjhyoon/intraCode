@@ -223,6 +223,8 @@ function accessFile() {
         console.log('Tis html, do highlighting');
     }
 
+    highlightCode();
+
     document.getElementById('docType').textContent = getExtensionType(openFileName);
 
     // Make Sure highlighting goes here
@@ -286,5 +288,14 @@ function saveAs() {
     }
     else {
         console.log('Nah not downloading');
+    }
+}
+
+function highlightCode() {
+    let currSpace = document.querySelectorAll('.code-space')[currSpaceIndex];
+    var linesArr = currSpace.querySelectorAll('.code-line');
+
+    for(let lineNum = 0; lineNum < linesArr.length; lineNum++) {
+        linesArr[lineNum].innerHTML = linesArr[lineNum].innerText.replace('var', 'var'.fontcolor('#0047ab'))
     }
 }
